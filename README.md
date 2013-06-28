@@ -74,7 +74,7 @@ Usage
 
 int main(void) {
 
-	// allocate a 10 × 20 array of ints on host (CPU)
+	// allocate a 10×20 array of ints in row-major order on host (CPU)
 	cuv::ndarray<int, cuv::host_memory_space> a_host(10, 20);
 
 	assert(a_host.ndim() == 2);        // a_host is a two-dimensional array
@@ -87,6 +87,11 @@ int main(void) {
 			a_host(i, j) = x++;
 		}
 	}
+
+	// reshape to a 20×10 array
+	a_host.reshape(20, 10);
+	assert(a_host.shape(0) == 20);
+	assert(a_host.shape(1) == 10);
 
 	// copy the array to the GPU
 	cuv::ndarray<int, cuv::dev_memory_space> a_device = a_host;
