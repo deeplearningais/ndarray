@@ -1,0 +1,19 @@
+INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/cuv)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/)
+
+FIND_PACKAGE(TBB      REQUIRED)
+
+CUDA_INCLUDE_DIRECTORIES( ${TBB_INCLUDE_DIRS}  )
+INCLUDE_DIRECTORIES(      ${TBB_INCLUDE_DIRS}  )
+
+SET (TEST_LINK_LIBS ${Boost_LIBRARIES} ${TBB_LIBRARIES} ndarray${LIB_SUFFIX})
+
+CUDA_ADD_EXECUTABLE(allocators_test allocators_test.cpp)
+TARGET_LINK_LIBRARIES(allocators_test ${TEST_LINK_LIBS})
+
+CUDA_ADD_EXECUTABLE(ndarray_test ndarray_test.cpp)
+TARGET_LINK_LIBRARIES(ndarray_test ${TEST_LINK_LIBS})
+
+ADD_TEST(allocators_test "${CMAKE_BINARY_DIR}/src/tests/allocators_test")
+ADD_TEST(ndarray_test "${CMAKE_BINARY_DIR}/src/tests/ndarray_test")
