@@ -73,6 +73,8 @@ Usage
 #include <cuv/ndarray.hpp>
 
 int main(void) {
+
+	// allocate a 10 × 20 array of ints on host (CPU)
 	cuv::ndarray<int, cuv::host_memory_space> a_host(10, 20);
 
 	assert(a_host.ndim() == 2);        // a_host is a two-dimensional array
