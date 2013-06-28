@@ -64,5 +64,37 @@ ctest                # run tests to see if it went well
 sudo make install
 ```
 
+Usage
+-----
+
+### Example ###
+
+```c++
+#include <cuv/ndarray.hpp>
+
+int main(void) {
+	cuv::ndarray<int, cuv::host_memory_space> a_host(10, 20);
+
+	assert(a_host.ndim() == 2);        // a_host is a two-dimensional array
+	assert(a_host.size() == 10 * 20);
+
+	// initialize the array
+	int x = 0;
+	for(int i=0; i < a_host.shape(0); i++) { // shape(0) == 10
+		for(int j=0; j < a_host.shape(1); j++) { // shape(1) == 20
+			a_host(i, j) = x++;
+		}
+	}
+
+	// copy the array to the GPU
+	cuv::ndarray<int, cuv::dev_memory_space> a_device = a_host;
+
+	// get the pointer to global device memory
+	int* device_ptr = a_device.ptr();
+
+	return 0;
+}
+```
+
 [thrust]: http://code.google.com/p/thrust/
 [cuv]: https://github.com/deeplearningais/CUV
