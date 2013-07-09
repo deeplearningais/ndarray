@@ -1,7 +1,6 @@
 #define BOOST_TEST_MODULE example
 #include <boost/test/included/unit_test.hpp>
-
-#include "ndarray.hpp"
+#include <cuv/ndarray.hpp>
 
 using namespace cuv;
 

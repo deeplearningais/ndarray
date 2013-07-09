@@ -3,10 +3,9 @@
 #include <boost/format.hpp>
 #include <boost/test/included/unit_test.hpp>
 #include <boost/thread/mutex.hpp>
+#include <cuv/allocators.hpp>
+#include <cuv/reference.hpp>
 #include <tbb/parallel_for_each.h>
-
-#include "allocators.hpp"
-#include "reference.hpp"
 
 using namespace cuv;
 
