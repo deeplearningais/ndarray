@@ -25,11 +25,6 @@ SET(CUDA_ARCHITECTURE "" CACHE STRING "The CUDA architecture to compile for, i.e
 SET(CUDA_NVCC_FLAGS "${CUDA_NVCC_FLAGS};${CUDA_ARCHITECTURE}")
 MESSAGE(STATUS "CUDA_NVCC_FLAGS: ${CUDA_NVCC_FLAGS}")
 
-# CUDA_INCLUDE_DIRECTORIES( ${CUDA_SDK_ROOT_DIR}/common/inc ${CMAKE_CURRENT_SOURCE_DIR}  tools )
-# INCLUDE_DIRECTORIES(      ${CUDA_SDK_ROOT_DIR}/common/inc ${CUDA_INCLUDE_DIRS}         tools )
-# CUDA_INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}                                )
-# INCLUDE_DIRECTORIES(      ${CMAKE_CURRENT_SOURCE_DIR}                                )
-#
 CUDA_INCLUDE_DIRECTORIES( ${THRUST_PATH}                                )
 INCLUDE_DIRECTORIES(      ${THRUST_PATH}                                )
 
