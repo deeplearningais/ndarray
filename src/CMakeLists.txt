@@ -30,8 +30,3 @@ INCLUDE_DIRECTORIES(      ${THRUST_PATH}                                )
 
 add_subdirectory(cuv)
 add_subdirectory(tests)
-
-INSTALL(DIRECTORY cuv${LIB_SUFFIX}/
-	DESTINATION "include/cuv"
-	FILES_MATCHING PATTERN "*.hpp"
-)

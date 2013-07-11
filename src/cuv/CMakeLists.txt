@@ -5,3 +5,7 @@ install(TARGETS "ndarray${LIB_SUFFIX}"
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib/static )
+
+INSTALL(FILES ndarray.hpp tags.hpp allocators.hpp cuda_general.hpp memory.hpp meta_programming.hpp reference.hpp
+	DESTINATION "include/cuv"
+)
