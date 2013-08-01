@@ -103,9 +103,6 @@ public:
 class pooled_cuda_allocator: public allocator {
 private:
 
-    static const size_t MIN_SIZE_HOST = 8192;
-    static const size_t MIN_SIZE_DEV = 1;
-
     std::string m_name;
 
     boost::recursive_mutex m_dev_pool_mutex;
@@ -162,7 +159,8 @@ private:
     void do_dealloc(void** ptr, memory_space m);
 
 public:
-
+    static const size_t MIN_SIZE_HOST = 8192;
+    static const size_t MIN_SIZE_DEV = 1;
     explicit pooled_cuda_allocator(const std::string& _name = "");
 
     virtual ~pooled_cuda_allocator();
