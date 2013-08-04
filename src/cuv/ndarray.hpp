@@ -1262,7 +1262,7 @@ public:
      * /always/ try to copy memory
      */
     ndarray_view& assign(const ndarray<V, M, L>& o, cudaStream_t stream = 0) {
-        if (!copy_memory(o, false, stream))
+        if (!this->copy_memory(o, false, stream))
             throw std::runtime_error("copying ndarray to ndarray_view did not succeed. Maybe a shape mismatch?");
         return *this;
     }
@@ -1271,7 +1271,7 @@ public:
      * /always/ try to copy memory
      */
     ndarray_view& assign(const ndarray_view<V, M, L>& o, cudaStream_t stream = 0) {
-        if (!copy_memory(o, false, stream))
+        if (!this->copy_memory(o, false, stream))
             throw std::runtime_error("copying ndarray to ndarray_view did not succeed. Maybe a shape mismatch?");
         return *this;
     }
@@ -1283,7 +1283,7 @@ public:
      */
     template<class OM>
     ndarray_view& assign(const ndarray<V, OM, L>& o, cudaStream_t stream = 0) {
-        if (!copy_memory(o, false, stream))
+        if (!this->copy_memory(o, false, stream))
             throw std::runtime_error("copying ndarray to ndarray_view did not succeed. Maybe a shape mismatch?");
         return *this;
     }
@@ -1295,7 +1295,7 @@ public:
      */
     template<class OM>
     ndarray_view& assign(const ndarray_view<V, OM, L>& o, cudaStream_t stream = 0) {
-        if (!copy_memory(o, false, stream))
+        if (!this->copy_memory(o, false, stream))
             throw std::runtime_error("copying ndarray to ndarray_view did not succeed. Maybe a shape mismatch?");
         return *this;
     }
