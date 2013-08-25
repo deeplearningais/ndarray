@@ -187,14 +187,25 @@ public:
     }
 
     template<class value_type2, class memory_space>
+    void copy_from(V* dst, const value_type2* src, size_t size, memory_space m, cudaStream_t stream) {
+        detail::copy(dst, src, size, M(), m, stream);
+    }
+
+    template<class value_type2, class memory_space>
     void copy_from(const value_type2* src, size_t size, memory_space m, cudaStream_t stream) {
-        detail::copy(m_ptr, src, size, M(), m, stream);
+        copy_from(m_ptr, src, size, m, stream);
+    }
+
+    template<class value_type2, class memory_space>
+    void copy2d_from(V* dst, const value_type2* src, size_t dpitch, size_t spitch, size_t h, size_t w,
+            memory_space m, cudaStream_t stream) {
+        detail::copy2d(dst, src, dpitch, spitch, h, w, M(), m, stream);
     }
 
     template<class value_type2, class memory_space>
     void copy2d_from(const value_type2* src, size_t dpitch, size_t spitch, size_t h, size_t w,
             memory_space m, cudaStream_t stream) {
-        detail::copy2d(m_ptr, src, dpitch, spitch, h, w, M(), m, stream);
+        copy2d_from(m_ptr, src, dpitch, spitch, h, w, m, stream);
     }
 
 };

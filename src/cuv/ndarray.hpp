@@ -1141,21 +1141,21 @@ public:
         }
 
         assert(m_memory.get());
-        assert(m_ptr == m_memory->ptr());
+        // ATTENTION: m_ptr might be different than m_memory->ptr()!
 
         // TODO: this could be probably implemented in the memory classes as well
 
         if (is_c_contiguous() && src.is_c_contiguous()) {
             // can copy w/o bothering about m_memory
-            m_memory->copy_from(src.ptr(), src.size(), OM(), stream);
+            m_memory->copy_from(m_ptr, src.ptr(), src.size(), OM(), stream);
         } else if (is_c_contiguous() && src.is_2dcopyable()) {
             size_type row, col, pitch;
             detail::get_pitched_params(row, col, pitch, src.info().host_shape, src.info().host_stride, OL());
-            m_memory->copy2d_from(src.ptr(), col, pitch, row, col, OM(), stream);
+            m_memory->copy2d_from(m_ptr, src.ptr(), col, pitch, row, col, OM(), stream);
         } else if (!force_dst_contiguous && is_2dcopyable() && src.is_c_contiguous()) {
             size_type row, col, pitch;
             detail::get_pitched_params(row, col, pitch, info().host_shape, info().host_stride, L());
-            m_memory->copy2d_from(src.ptr(), pitch, col, row, col, OM(), stream);
+            m_memory->copy2d_from(m_ptr, src.ptr(), pitch, col, row, col, OM(), stream);
         } else if (!force_dst_contiguous && is_2dcopyable() && src.is_c_contiguous()) {
             size_type srow, scol, spitch;
             size_type drow, dcol, dpitch;
@@ -1163,7 +1163,7 @@ public:
             detail::get_pitched_params(srow, scol, spitch, src.info().host_shape, src.info().host_stride, OL());
             cuvAssert(scol==srow);
             cuvAssert(dcol==drow);
-            m_memory->copy2d_from(src.ptr(), dpitch, spitch, srow, scol, OM(), stream);
+            m_memory->copy2d_from(m_ptr, src.ptr(), dpitch, spitch, srow, scol, OM(), stream);
         } else {
             throw std::runtime_error("copying of generic strides not implemented yet");
         }

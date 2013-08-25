@@ -132,6 +132,42 @@ BOOST_AUTO_TEST_CASE( ndarray_copy ) {
     }
 }
 
+BOOST_AUTO_TEST_CASE( ndarray_copy_assignment )
+{
+    ndarray<int, host_memory_space> x(extents[10][10][10]);
+    ndarray<int, host_memory_space> y(extents[1][10][10]);
+
+    // avoid fill() dependency
+    for (int i = 0; i < x.size(); i++) {
+        x.ptr()[i] = 0;
+    }
+    for (int i = 0; i < y.size(); i++) {
+        y.ptr()[i] = 1;
+    }
+
+    // assign to a view should copy the array
+    x[indices[1][index_range(0, 10)][index_range(0, 10)]] = y[indices[0][index_range()][index_range()]];
+
+    // x[0, ...] must remain unchanged
+    for (int i = 0; i < 10 * 10; i++) {
+        BOOST_REQUIRE_EQUAL(x.ptr()[i], 0);
+    }
+
+    // x[1, ...] must have changed to 1
+    for (int i = 0; i < 10 * 10; i++) {
+        BOOST_REQUIRE_EQUAL(x.ptr()[100 + i], 1);
+    }
+
+    // changing y must not influence x
+    for (int i = 0; i < y.size(); i++) {
+        y.ptr()[i] = 2;
+    }
+
+    for (int i = 0; i < 10 * 10; i++) {
+        BOOST_REQUIRE_EQUAL(x.ptr()[100 + i], 1);
+    }
+}
+
 BOOST_AUTO_TEST_CASE( ndarray_out_of_scope_view ) {
     // sub-ndarray views should persist when original ndarray falls out of scope
     ndarray<float, host_memory_space> y;
@@ -657,4 +693,7 @@ BOOST_AUTO_TEST_CASE( stream_values )
     }
     BOOST_CHECK_EQUAL(o.str(), "012345");
 }
+
+
+
 BOOST_AUTO_TEST_SUITE_END()
